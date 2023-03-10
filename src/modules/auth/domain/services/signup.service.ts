@@ -1,7 +1,7 @@
 import { JwtPayload } from "@libraries/jwt/jwt.payload";
 import { JwtHandlerService } from "@libraries/jwt/jwt.service";
 import { OAuth } from "@libraries/utils/oauth.util";
-import { Injectable } from "@nestjs/common";
+import { ConflictException, Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import {
   SignupInboundPort,
@@ -29,8 +29,13 @@ export class SignupService implements SignupInboundPort {
     params: SignupInboundPortInputDto
   ): Promise<SignupInboundPortOutputDto> {
     const uuid = await this._oauth.connect(params.provider)(params.token);
-    await this._findUserOutboundPort.findUser("uuid", uuid);
-    await this._findUserOutboundPort.findUser("nickname", params.nickname);
+    const alreadySignedUuid = await this._findUserOutboundPort.findUser("uuid", uuid);
+    const alreadySignedNickname = await this._findUserOutboundPort.findUser("nickname", params.nickname);
+
+    if (alreadySignedUuid || alreadySignedNickname)
+      throw new ConflictException(
+        "이미 가입한 유저이거나 사용중인 닉네임입니다."
+      );
 
     const newRefreshToken = this._jwt.getRefreshToken();
     const newUser = await this._createUserOutboundPort.createUser({
