@@ -58,11 +58,7 @@ export class ConfigService {
   // }
 
   static redisConfig(): RedisConfig {
-    const [host, port] =
-      process.env.NODE_ENV === "production"
-        ? [process.env.REDIS_HOST, process.env.REDIS_PORT]
-        : [process.env.REDIS_TEST_HOST, process.env.REDIS_TEST_PORT];
-
+    const [host, port] = [process.env.REDIS_HOST, process.env.REDIS_PORT];
     return { host, port: Number(port) };
   }
 
@@ -78,6 +74,7 @@ export class ConfigService {
   static typeormConfig(): TypeOrmModuleOptions {
     return {
       ...this.databaseConfig(),
+      timezone: 'Asia/Seoul',
       logger: new QueryLoggerUtil(),
       entities: [
         path.join(
@@ -104,6 +101,7 @@ export class ConfigService {
   static testTypeormConfig(): TypeOrmModuleOptions {
     return {
       ...this.databaseConfig(),
+      timezone: 'Asia/Seoul',
       entities: [
         path.join(
           __dirname,
@@ -136,9 +134,7 @@ export class ConfigService {
       database,
       logging,
       synchronize,
-    ] =
-      process.env.NODE_ENV === "production"
-        ? [
+    ] = [
             process.env.DB_TYPE,
             process.env.DB_HOST,
             process.env.DB_PORT,
@@ -147,16 +143,6 @@ export class ConfigService {
             process.env.DB_DATABASE_NAME,
             process.env.DB_LOGGING,
             process.env.DB_SYNC,
-          ]
-        : [
-            process.env.DEV_DB_TYPE,
-            process.env.DEV_DB_HOST,
-            process.env.DEV_DB_PORT,
-            process.env.DEV_DB_USERNAME,
-            process.env.DEV_DB_PASSWORD,
-            process.env.DEV_DB_DATABASE_NAME,
-            process.env.DEV_DB_LOGGING,
-            process.env.DEV_DB_SYNC,
           ];
 
     return {
@@ -166,8 +152,8 @@ export class ConfigService {
       database,
       username,
       password,
-      synchronize: synchronize === "false" ? false : Boolean(synchronize),
-      logging: logging === "false" ? false : Boolean(logging),
+      synchronize: Boolean(synchronize),
+      logging: Boolean(logging),
     };
   }
 }
