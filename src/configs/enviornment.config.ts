@@ -62,15 +62,6 @@ export class ConfigService {
     return { host, port: Number(port) };
   }
 
-  static redisTestConfig(): RedisConfig {
-    const [host, port] = [
-      process.env.REDIS_TEST_HOST,
-      process.env.REDIS_TEST_PORT,
-    ];
-
-    return { host, port: Number(port) };
-  }
-
   static typeormConfig(): TypeOrmModuleOptions {
     return {
       ...this.databaseConfig(),
