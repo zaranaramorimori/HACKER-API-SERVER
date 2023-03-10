@@ -34,10 +34,6 @@ export class SignupAdapter
     value: string | bigint
   ): Promise<FindUserOutboundPortOutputDto> {
     const user = await this._userRepository.findOne({ [key]: value });
-    if (user)
-      throw new ConflictException(
-        "이미 가입한 유저이거나 사용중인 닉네임입니다."
-      );
     return user;
   }
 
