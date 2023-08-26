@@ -1,0 +1,3 @@
+[submodule "src/main/resources/HACKER-CONFIG"]
+	path = src/main/resources/HACKER-CONFIG
+	url = https://github.com/zaranaramorimori/HACKER-CONFIG.git
