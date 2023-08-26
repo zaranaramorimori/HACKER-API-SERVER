@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+    branches:
+      - main
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ✅ repository checkout
+        uses: actions/checkout@v3
+
+      - name: ☕️ java 설치
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'zulu'
+
+      - name: 🎸 gradlew 권한 부여
+        run: chmod +x gradlew
+
+      - name: 🐘 Gradle build
+        run: ./gradlew build
+
+      - name: 🧪 테스트 결과 PR에 커멘트 등록
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        if: always()
+        with:
+          files: '**/build/test-results/test/TEST-*.xml'
+
+      - name: 🧪 테스트 실패 Check 코멘트 등록
+        uses: mikepenz/action-junit-report@v3
+        if: always()
+        with:
+          report_paths: '**/build/test-results/test/TEST-*.xml'
+          token: ${{ github.token }}
