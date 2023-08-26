@@ -20,7 +20,7 @@ public class GithubUserInfoClient {
 	public GithubUserInfoClient(GithubOauthProperty property, RestTemplateBuilder restTemplateBuilder) {
 		this.property = property;
 		this.restTemplate = restTemplateBuilder
-			.errorHandler(new GithubUserInfoExceptionHandler())
+			.errorHandler(new GithubExceptionHandler())
 			.build();
 	}
 

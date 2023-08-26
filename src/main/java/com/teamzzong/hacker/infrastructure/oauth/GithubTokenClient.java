@@ -19,7 +19,7 @@ public class GithubTokenClient {
 	public GithubTokenClient(GithubOauthProperty property, RestTemplateBuilder restTemplateBuilder) {
 		this.property = property;
 		this.restTemplate = restTemplateBuilder
-			.errorHandler(new GithubTokenExceptionHandler())
+			.errorHandler(new GithubExceptionHandler())
 			.build();
 	}
 
