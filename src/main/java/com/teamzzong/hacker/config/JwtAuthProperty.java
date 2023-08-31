@@ -1,4 +1,4 @@
-package com.teamzzong.hacker.infrastructure.jwt;
+package com.teamzzong.hacker.config;
 
 import java.util.Map;
 

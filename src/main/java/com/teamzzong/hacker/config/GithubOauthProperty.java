@@ -1,4 +1,4 @@
-package com.teamzzong.hacker.infrastructure.oauth;
+package com.teamzzong.hacker.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

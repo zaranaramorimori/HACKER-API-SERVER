@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import javax.crypto.SecretKey;
 
 import com.teamzzong.hacker.application.AuthTokenProvider;
+import com.teamzzong.hacker.config.JwtAuthProperty;
 import com.teamzzong.hacker.domain.AuthTokenPayload;
 import com.teamzzong.hacker.domain.AuthTokenType;
 

@@ -4,6 +4,7 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Component;
 
 import com.teamzzong.hacker.application.oauth.OauthClient;
+import com.teamzzong.hacker.config.GithubOauthProperty;
 import com.teamzzong.hacker.domain.SocialType;
 import com.teamzzong.hacker.dto.UserInfo;
 

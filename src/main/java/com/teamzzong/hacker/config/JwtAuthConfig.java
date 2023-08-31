@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.teamzzong.hacker.application.AuthTokenProvider;
-import com.teamzzong.hacker.infrastructure.jwt.JwtAuthProperty;
 import com.teamzzong.hacker.infrastructure.jwt.JwtAuthTokenProvider;
 
 import lombok.AllArgsConstructor;

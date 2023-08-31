@@ -9,6 +9,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
 
+import com.teamzzong.hacker.config.GithubOauthProperty;
 import com.teamzzong.hacker.dto.UserInfo;
 import com.teamzzong.hacker.dto.oauth.GithubUserInfoResponse;
 

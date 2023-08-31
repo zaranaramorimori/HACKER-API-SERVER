@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 
 import com.teamzzong.hacker.application.oauth.OauthClient;
 import com.teamzzong.hacker.application.oauth.OauthClients;
-import com.teamzzong.hacker.infrastructure.oauth.GithubOauthProperty;
 
 @Configuration
 @EnableConfigurationProperties({GithubOauthProperty.class})
