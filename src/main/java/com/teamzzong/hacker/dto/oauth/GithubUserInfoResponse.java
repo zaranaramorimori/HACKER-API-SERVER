@@ -1,13 +1,12 @@
 package com.teamzzong.hacker.dto.oauth;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.teamzzong.hacker.domain.SocialType;
 import com.teamzzong.hacker.dto.UserInfo;
 
 public record GithubUserInfoResponse(
 	String id,
 	String login,
-	@JsonProperty("avatar_url") String avatarUrl
+	String avatarUrl
 ) {
 
 	public UserInfo toUserInfo() {
