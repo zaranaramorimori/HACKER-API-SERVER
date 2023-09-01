@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.teamzzong.hacker.application.oauth.OauthClients;
 import com.teamzzong.hacker.domain.AuthTokenPayload;
 import com.teamzzong.hacker.domain.AuthTokenType;
+import com.teamzzong.hacker.domain.AuthTokens;
 import com.teamzzong.hacker.domain.Member;
 import com.teamzzong.hacker.domain.SocialType;
 import com.teamzzong.hacker.dto.LoginResponse;
@@ -34,20 +35,21 @@ public class AuthService {
 			return LoginResponse.signUp(userInfo);
 		}
 		Member member = optionalMember.get();
+		return LoginResponse.login(createAuthToken(member));
+	}
+
+	private AuthTokens createAuthToken(Member member) {
 		AuthTokenPayload payload = new AuthTokenPayload(member.getId());
 		String accessToken = tokenProvider.generate(AuthTokenType.ACCESS, payload);
 		String refreshToken = tokenProvider.generate(AuthTokenType.REFRESH, payload);
-		return LoginResponse.login(accessToken, refreshToken);
+		return new AuthTokens(accessToken, refreshToken);
 	}
 
 	public SignUpResponse signUp(SignUpRequest request) {
 		validateExistMember(request.socialType(), request.socialId());
 		validateNickname(request.nickname());
 		Member member = memberRepository.save(new Member(request.socialType(), request.socialId(), request.nickname()));
-		AuthTokenPayload payload = new AuthTokenPayload(member.getId());
-		String accessToken = tokenProvider.generate(AuthTokenType.ACCESS, payload);
-		String refreshToken = tokenProvider.generate(AuthTokenType.REFRESH, payload);
-		return new SignUpResponse(accessToken, refreshToken);
+		return SignUpResponse.from(createAuthToken(member));
 	}
 
 	private void validateExistMember(SocialType socialType, String socialId) {

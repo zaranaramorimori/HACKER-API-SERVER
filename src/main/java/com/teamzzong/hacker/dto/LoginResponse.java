@@ -1,15 +1,17 @@
 package com.teamzzong.hacker.dto;
 
+import com.teamzzong.hacker.domain.AuthTokens;
+
 public record LoginResponse(
 	Boolean isNew,
 	LoginTokenResponse tokens,
 	LoginUserInfoResponse userInfo
 ) {
 
-	public static LoginResponse login(String accessToken, String refreshToken) {
+	public static LoginResponse login(AuthTokens authTokens) {
 		return new LoginResponse(
 			false,
-			new LoginTokenResponse(accessToken, refreshToken),
+			new LoginTokenResponse(authTokens.getAccessToken(), authTokens.getRefreshToken()),
 			null
 		);
 	}
