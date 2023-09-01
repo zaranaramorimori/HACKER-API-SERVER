@@ -10,4 +10,6 @@ import com.teamzzong.hacker.domain.SocialType;
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
 	Optional<Member> findBySocialTypeAndSocialId(SocialType socialType, String socialId);
+
+	Optional<Member> findByNickname(String nickname);
 }

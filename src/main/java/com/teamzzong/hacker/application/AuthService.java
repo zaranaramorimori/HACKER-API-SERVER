@@ -11,6 +11,8 @@ import com.teamzzong.hacker.domain.AuthTokenType;
 import com.teamzzong.hacker.domain.Member;
 import com.teamzzong.hacker.domain.SocialType;
 import com.teamzzong.hacker.dto.LoginResponse;
+import com.teamzzong.hacker.dto.SignUpRequest;
+import com.teamzzong.hacker.dto.SignUpResponse;
 import com.teamzzong.hacker.dto.UserInfo;
 import com.teamzzong.hacker.infrastructure.MemberRepository;
 
@@ -36,5 +38,29 @@ public class AuthService {
 		String accessToken = tokenProvider.generate(AuthTokenType.ACCESS, payload);
 		String refreshToken = tokenProvider.generate(AuthTokenType.REFRESH, payload);
 		return LoginResponse.login(accessToken, refreshToken);
+	}
+
+	public SignUpResponse signUp(SignUpRequest request) {
+		validateExistMember(request.socialType(), request.socialId());
+		validateNickname(request.nickname());
+		Member member = memberRepository.save(new Member(request.socialType(), request.socialId(), request.nickname()));
+		AuthTokenPayload payload = new AuthTokenPayload(member.getId());
+		String accessToken = tokenProvider.generate(AuthTokenType.ACCESS, payload);
+		String refreshToken = tokenProvider.generate(AuthTokenType.REFRESH, payload);
+		return new SignUpResponse(accessToken, refreshToken);
+	}
+
+	private void validateExistMember(SocialType socialType, String socialId) {
+		memberRepository.findBySocialTypeAndSocialId(socialType, socialId)
+			.ifPresent(member -> {
+				throw new IllegalArgumentException("이미 존재하는 회원입니다.");
+			});
+	}
+
+	private void validateNickname(String nickname) {
+		memberRepository.findByNickname(nickname)
+			.ifPresent(member -> {
+				throw new IllegalArgumentException("이미 존재하는 닉네임입니다.");
+			});
 	}
 }
