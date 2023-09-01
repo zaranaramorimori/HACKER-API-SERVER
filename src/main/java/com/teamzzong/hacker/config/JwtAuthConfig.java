@@ -17,7 +17,7 @@ public class JwtAuthConfig {
 	private final JwtAuthProperty property;
 
 	@Bean
-	public AuthTokenProvider authTokenProvider(JwtAuthProperty property) {
+	public AuthTokenProvider authTokenProvider() {
 		return JwtAuthTokenProvider.from(property);
 	}
 }
