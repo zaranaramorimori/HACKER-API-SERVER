@@ -17,7 +17,7 @@ public class GithubExceptionHandler extends DefaultResponseErrorHandler {
 		HttpStatusCode statusCode = response.getStatusCode();
 		if (statusCode.is4xxClientError()) {
 			log4xxError(response);
-			throw new IllegalArgumentException(); // TODO
+			// throw new IllegalArgumentException(); // TODO
 		}
 		if (statusCode.is5xxServerError()) {
 			throw new IllegalArgumentException("[Github] Internal Server Error"); // TODO

@@ -12,7 +12,7 @@ import lombok.AllArgsConstructor;
 @Configuration
 @EnableConfigurationProperties(JwtAuthProperty.class)
 @AllArgsConstructor
-public class JwtAuthConfig {
+public class AuthConfig {
 
 	private final JwtAuthProperty property;
 

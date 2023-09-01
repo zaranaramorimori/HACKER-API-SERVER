@@ -28,7 +28,6 @@ public class GithubUserInfoClient {
 	public UserInfo request(String accessToken) {
 		HttpHeaders headers = getHttpHeaders(accessToken);
 
-		System.out.println("property = " + property);
 		GithubUserInfoResponse response = restTemplate
 			.exchange(
 				property.userInfoUri(),
